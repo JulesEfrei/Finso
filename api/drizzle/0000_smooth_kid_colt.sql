@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"email" text NOT NULL,
 	"name" text NOT NULL,
-	"date" date,
+	"password" text NOT NULL,
+	"created_at" date DEFAULT now(),
+	"updated_at" date,
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint

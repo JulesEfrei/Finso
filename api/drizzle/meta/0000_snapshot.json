@@ -1,5 +1,5 @@
 {
-  "id": "742fef02-8ae0-4dfe-9f5c-e3ec523c1dbe",
+  "id": "d25c30a6-f589-41aa-97f8-582b4492676d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -93,8 +93,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "date": {
-          "name": "date",
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "date",
           "primaryKey": false,
           "notNull": false

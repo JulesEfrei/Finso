@@ -5,12 +5,14 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/pg": "^8.11.10",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "vitest": "^2.1.1"
   },
   "scripts": {
     "dev": "bun --watch run index.ts",
     "make-migration": "bun drizzle-kit generate",
-    "migrate": "bun run src/db/utils/migrate.ts"
+    "migrate": "bun run src/db/utils/migrate.ts",
+    "test": "vitest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

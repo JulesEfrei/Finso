@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import userRouter from "./src/api/user";
 import authRouter from "./src/api/auth";
 import transactionRouter from "./src/api/transaction";
+import { wrapReturnObject } from "./src/utils/returnFormat";
 
 const app = new Hono();
 
@@ -17,7 +18,7 @@ app.use("*", async (c, next) => {
 });
 
 app.notFound((c) => {
-  return c.json({ data: "Not Found", error: true }, 404);
+  return c.json(wrapReturnObject(404), 404);
 });
 
 app.route("api/auth", authRouter);

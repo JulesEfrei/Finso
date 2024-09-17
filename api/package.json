@@ -12,7 +12,8 @@
     "dev": "bun --watch run index.ts",
     "make-migration": "bun drizzle-kit generate",
     "migrate": "bun run src/db/utils/migrate.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "bun build index.ts --outdir ./dist --target bun"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

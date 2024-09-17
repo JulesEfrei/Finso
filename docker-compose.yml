@@ -1,30 +1,36 @@
 services:
   # Frontend service
-  # app:
-  #   build:
-  #     context: ./front-end
-  #   ports:
-  #     - "8080:80" # Expose port 80 from the container to 8080 on the host
-  #   depends_on:
-  #     - api # Ensure frontend starts after API
-  #   networks:
-  #     - app_network
+  app:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: front-end
+    ports:
+      - 8080:80
+    networks:
+      - app_network
 
   # Backend API service
-  # api:
-  #   build:
-  #     context: ./api
-  #   ports:
-  #     - "3000:3000" # Expose port 3000 from the container to 3000 on the host
-  #   environment:
-  #     MONGO_URL: mongodb://mongo:27017/mydb
-  #   depends_on:
-  #     - mongo # Ensure API starts after MongoDB
-  #   networks:
-  #     - app_network
+  api:
+    container_name: api
+    build:
+      context: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - db
+    networks:
+      - app_network
 
   # PostgreSQL database service
   db:
+    container_name: db
     image: postgres:12.20-alpine
     environment:
       POSTGRES_DB: finso

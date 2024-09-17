@@ -90,18 +90,21 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/JulesEfrei_/Finso.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+2. Setup environment variables
+   ```.env
+   DB_HOST=db (Should be db if you're using docker, or localhost if running it withtout docker)
+   DB_NAME=my_db
+   DB_USER=root
+   DB_PASSWORD=password
+   JWT_SECRET=your-secret-key
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+3. Run the application
+   ```bash
+   docker compose up -d
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -110,7 +113,22 @@ To get a local copy up and running follow these simple example steps.
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+API endpoints:
+
+Here is the updated markdown table with a "Body Params" column for the specified endpoints:
+
+| Method | Endpoint                                        | Parameters            | Body Params                                                                              | Description                          |
+| ------ | ----------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------ |
+| GET    | /api/health                                     | N/A                   | N/A                                                                                      | Check the health of the API          |
+| GET    | /api/users/{userId}/transactions                | userId                | N/A                                                                                      | Get all transactions of the user     |
+| GET    | /api/users/{userId}/transactions/{type}         | userId, type          | N/A                                                                                      | Get transactions of the user by type |
+| GET    | /api/users/{userId}/transaction/{transactionId} | userId, transactionId | N/A                                                                                      | Get a specific transaction by ID     |
+| POST   | /api/users/{userId}/transaction                 | userId                | {name: string, amount: number, date: date, type: "income"\|"outcome", category?: string} | Add a new transaction                |
+| DELETE | /api/users/{userId}/transaction/{transactionId} | userId, transactionId | N/A                                                                                      | Delete a specific transaction by ID  |
+| PUT    | /api/users/{id}                                 | id                    | {name: string, email: string, password: string}                                          | Modify user information              |
+| DELETE | /api/users/{id}                                 | id                    | N/A                                                                                      | Delete the user by ID                |
+| POST   | /api/auth/login                                 | N/A                   | {email: string, password: string}                                                        | Authenticate user (login)            |
+| POST   | /api/auth/register                              | N/A                   | {name: string, email: string, password: string}                                          | Register a new user                  |
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
@@ -123,12 +141,14 @@ Use this space to show useful examples of how a project can be used. Additional 
 Here is the roadmap of the project. Checked flags mean the features is out and unchecked flags mean that the feature is comming.
 
 - [x] JWT Authentication
-- [x] Docker config
+- [x] Docker configuration
 - [x] Create account
-- [ ] CRUD on transaction
+- [x] CRUD on transaction
+- [x] API testing
 - [ ] Dashboard view
 - [ ] Profile view
 - [ ] Transaction list history view
+- [ ] Front-end testing
 
 See the [open issues](https://github.com/JulesEfrei/Finso/issues) for a full list of proposed features (and known issues).
 

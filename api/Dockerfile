@@ -1,25 +1,30 @@
-# api/Dockerfile
-
-# Use an official Node.js runtime as the base image
-FROM node:18-alpine
-
-# Set working directory
+FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (or yarn.lock)
-COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lockb /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-# Copy the rest of the app's source code
+RUN mkdir -p /temp/prod
+COPY package.json bun.lockb /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
+
+
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
-# Expose the port that Hono API runs on
-EXPOSE 3000
+# RUN bun test
+RUN bun run build
 
-# Define environment variables
-ENV MONGO_URL=mongodb://mongo:27017/mydb
 
-# Start the API
-CMD ["npm", "run", "index.ts"]
+FROM base AS release
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /usr/src/app/dist/index.js .
+
+USER bun
+EXPOSE 3000/tcp
+# RUN bun run migrate
+ENTRYPOINT [ "bun", "run", "index.js" ]

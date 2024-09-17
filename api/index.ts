@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import userRouter from "./src/api/user";
-import authRouter from "./src/api/auth";
-import transactionRouter from "./src/api/transaction";
+import userRouter from "./src/router/userRouter";
+import authRouter from "./src/router/authRouter";
+import transactionRouter from "./src/router/transactionRouter";
 import { wrapReturnObject } from "./src/utils/returnFormat";
 
 const app = new Hono();

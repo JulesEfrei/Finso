@@ -1,6 +1,7 @@
 import { Hono } from "hono";
-import userRouter from "./src/db/api/user";
-import authRouter from "./src/db/api/auth";
+import userRouter from "./src/api/user";
+import authRouter from "./src/api/auth";
+import transactionRouter from "./src/api/transaction";
 
 const app = new Hono();
 
@@ -21,5 +22,6 @@ app.notFound((c) => {
 
 app.route("api/auth", authRouter);
 app.route("/api/users", userRouter);
+app.route("/api/users/:userId/transactions", transactionRouter);
 
 export default app;

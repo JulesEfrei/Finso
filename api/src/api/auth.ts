@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { db } from "../utils/database";
-import { NewUser, users } from "../schema/user";
+import { NewUser, users } from "../db/schema/user";
 import bcrypt from "bcryptjs";
-import { generateToken, verifyToken } from "../utils/authUtils";
+import { generateToken } from "../utils/authUtils";
 import { eq } from "drizzle-orm";
 
 const authRouter = new Hono();
@@ -12,14 +12,13 @@ authRouter.post("/register", async (c) => {
   const { name, email, password }: NewUser = await c.req.json();
 
   const hashedPassword = await bcrypt.hash(password, 15);
-  console.log({ name, email, password: hashedPassword });
 
   await db
     .insert(users)
     .values({ name, email, password: hashedPassword })
     .returning();
 
-  return c.json({ message: "User created !" });
+  return c.json({ message: "User created !" }, 201);
 });
 
 // Login user and generate JWT token
@@ -38,7 +37,7 @@ authRouter.post("/login", async (c) => {
   }
 
   const token = await generateToken(user.id);
-  return c.json({ token });
+  return c.json({ token }, 200);
 });
 
 export default authRouter;

@@ -3,6 +3,7 @@ import userRouter from "./src/router/userRouter";
 import authRouter from "./src/router/authRouter";
 import transactionRouter from "./src/router/transactionRouter";
 import { wrapReturnObject } from "./src/utils/returnFormat";
+import { cors } from "hono/cors";
 
 const app = new Hono();
 
@@ -16,6 +17,8 @@ app.use("*", async (c, next) => {
   const ms = Date.now() - start;
   c.header("X-Response-Time", `${ms}ms`);
 });
+
+app.use("/api/*", cors());
 
 app.notFound((c) => {
   return c.json(wrapReturnObject(404), 404);

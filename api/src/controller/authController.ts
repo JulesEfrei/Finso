@@ -49,5 +49,11 @@ export async function login(c: Context<BlankEnv, "", BlankInput>) {
   }
 
   const token = await generateToken(user.id, user);
-  return c.json(wrapReturnObject(200, null, token), 200);
+  return c.json(
+    wrapReturnObject(200, null, {
+      token,
+      user: { id: user.id, name: user.name, email: user.email },
+    }),
+    200
+  );
 }

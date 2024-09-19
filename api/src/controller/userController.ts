@@ -27,7 +27,7 @@ export async function patchUser(c: Context<BlankEnv, "/:id", BlankInput>) {
       body.password = await bcrypt.hash(body.password, 15);
     }
 
-    if (!isEmail(body.email)) {
+    if (body.email && !isEmail(body.email)) {
       return c.json(wrapReturnObject(400), 400);
     }
 

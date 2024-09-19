@@ -24,11 +24,22 @@ const items = ref([
         }
     },
     {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command: () => {
-            useAuthStore().logout();
-        }
+        label: 'Account',
+        icon: 'pi pi-user',
+        items: [
+            {
+                label: 'Profile',
+                icon: 'pi pi-user-edit',
+                slug: '/profile'
+            },
+            {
+                label: 'Logout',
+                icon: 'pi pi-sign-out',
+                command: () => {
+                    useAuthStore().logout();
+                }
+            }
+        ]
     }
 ]);
 
@@ -68,6 +79,7 @@ function closeModal() {
                     <button v-else v-bind="props.action">
                         <span v-if="item.icon" :class="item.icon" />
                         <span class="ml-2">{{ item.label }}</span>
+                        <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
                     </button>
                 </template>
                 <template #end>

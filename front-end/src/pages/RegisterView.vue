@@ -8,6 +8,7 @@ import { router } from '../main.js';
 import { fetchWrapper } from '../utils/fetchWrapper';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
+import { isEmail } from "../utils/validator.js"
 
 const name = ref("");
 const email = ref("");
@@ -35,12 +36,6 @@ async function register() {
     }
 }
 
-function isEmail(email) {
-    return email === "" || email.match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-}
-
 const toast = useToast();
 
 </script>
@@ -58,7 +53,8 @@ const toast = useToast();
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="email">Email</label>
-                        <InputText id="email" v-model="email" placeholder="Email" :invalid="!isEmail(email)" />
+                        <InputText type="email" id="email" v-model="email" placeholder="Email"
+                            :invalid="!isEmail(email)" />
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="password">Password</label>

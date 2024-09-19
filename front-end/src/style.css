@@ -9,6 +9,7 @@
   @tailwind utilities;
 }
 
-input[type="password"] {
+/* Override password input length */
+.p-password input {
   width: 100%;
 }

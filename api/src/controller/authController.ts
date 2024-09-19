@@ -52,7 +52,12 @@ export async function login(c: Context<BlankEnv, "", BlankInput>) {
   return c.json(
     wrapReturnObject(200, null, {
       token,
-      user: { id: user.id, name: user.name, email: user.email },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
     }),
     200
   );

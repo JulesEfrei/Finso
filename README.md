@@ -148,7 +148,9 @@ Here is the roadmap of the project. Checked flags mean the features is out and u
 - [ ] Dashboard view
 - [ ] Profile view
 - [ ] Transaction list history view
+- [x] Quick add transaction modal
 - [ ] Front-end testing
+- [ ] End-to-end testing
 
 See the [open issues](https://github.com/JulesEfrei/Finso/issues) for a full list of proposed features (and known issues).
 

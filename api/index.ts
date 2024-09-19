@@ -18,7 +18,13 @@ app.use("*", async (c, next) => {
   c.header("X-Response-Time", `${ms}ms`);
 });
 
-app.use("/api/*", cors());
+app.use(
+  "/api/*",
+  cors({
+    origin: "http://localhost:5173",
+    allowMethods: ["POST", "GET", "PATCH", "DELETE"],
+  })
+);
 
 app.notFound((c) => {
   return c.json(wrapReturnObject(404), 404);

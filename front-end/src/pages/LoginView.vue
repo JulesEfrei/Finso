@@ -17,15 +17,11 @@ async function login() {
     isLoading.value = true;
     try {
         const res = await useAuthStore().login(email.value, password.value)
-        console.log(res);
 
         if (res) {
             isLoading.value = false
             toast.add({ severity: 'success', summary: 'Your account has been successfuly created!', life: 3000 });
         }
-
-
-
     } catch (e) {
         isLoading.value = false;
         toast.add({ severity: 'error', summary: e.message, details: 'Please try again.', life: 3000 });
@@ -50,7 +46,8 @@ const toast = useToast();
                 <div class="flex flex-col gap-4 my-6 w-full">
                     <div class="flex flex-col gap-2">
                         <label for="email">Email</label>
-                        <InputText id="email" v-model="email" placeholder="Email" :invalid="!isEmail(email)" />
+                        <InputText type="email" id="email" v-model="email" placeholder="Email"
+                            :invalid="!isEmail(email)" />
 
                     </div>
                     <div class="flex flex-col gap-2">

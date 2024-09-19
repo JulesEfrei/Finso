@@ -26,7 +26,7 @@ function request(method) {
 function authHeader(url) {
   // return auth header with jwt if user is logged in and request is to the api url
   const { token } = useAuthStore();
-  const isApiUrl = url.startsWith("localhost:3000/api");
+  const isApiUrl = url.startsWith("http://localhost:3000/api");
   if (token && isApiUrl) {
     return { Authorization: `Bearer ${token}` };
   } else {

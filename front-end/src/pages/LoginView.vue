@@ -7,7 +7,6 @@ import Card from 'primevue/card';
 import { useAuthStore } from '../stores/auth.store.js';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
-import Divider from 'primevue/divider';
 
 const email = ref("");
 const password = ref("");
@@ -43,6 +42,7 @@ const toast = useToast();
 </script>
 
 <template>
+    <Toast />
     <div class="flex justify-center items-center h-screen">
         <Card class="w-[50dvw]">
             <template #title>Login to your account</template>

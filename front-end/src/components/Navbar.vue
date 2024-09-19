@@ -3,8 +3,9 @@ import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
 import { ref } from "vue";
 import { useAuthStore } from "../stores/auth.store.js"
+import TransactionModal from "./TransactionModal.vue"
 
-const defaultItems = [
+const items = ref([
     {
         label: 'Dashboard',
         icon: 'pi pi-home',
@@ -19,20 +20,24 @@ const defaultItems = [
         label: 'Add transactions',
         icon: 'pi pi-plus',
         command: () => {
-            console.log("Add transaction");
+            showModal.value = true;
         }
     },
     {
         label: 'Logout',
         icon: 'pi pi-sign-out',
         command: () => {
-            console.log("Logout");
             useAuthStore().logout();
         }
     }
-];
+]);
 
-const items = ref(defaultItems);
+const showModal = ref(false);
+
+function closeModal() {
+    showModal.value = false;
+}
+
 </script>
 
 <template>
@@ -75,4 +80,6 @@ const items = ref(defaultItems);
             </Menubar>
         </div>
     </nav>
+
+    <TransactionModal :visible="showModal" :closeModal="closeModal" />
 </template>

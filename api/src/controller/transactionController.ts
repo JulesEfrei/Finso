@@ -3,6 +3,7 @@ import { Context } from "hono";
 import { BlankEnv, BlankInput } from "hono/types";
 import {
   createTransaction,
+  getAverageTransactionsByMonth,
   getCategories,
   getMaxTransactions,
   getTransactionById,
@@ -65,6 +66,22 @@ export async function getTransactionsCategories(
   try {
     const categories = await getCategories(userId);
     return c.json(wrapReturnObject(200, null, categories), 200);
+  } catch (e) {
+    return c.json(wrapReturnObject(400), 400);
+  }
+}
+
+export async function getAverageTransactions(
+  c: Context<BlankEnv, "/:userId", BlankInput>
+) {
+  const { userId } = c.req.param();
+
+  try {
+    const averageResults = await getAverageTransactionsByMonth(userId);
+    return c.json(
+      wrapReturnObject(200, null, { transactions: averageResults }),
+      200
+    );
   } catch (e) {
     return c.json(wrapReturnObject(400), 400);
   }

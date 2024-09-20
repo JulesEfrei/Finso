@@ -6,12 +6,14 @@ const authStore = useAuthStore();
 </script>
 
 <template>
-  <div v-if="authStore.user">
-    <Navbar />
+  <div class="min-h-screen">
+    <div v-if="authStore.user">
+      <Navbar />
+    </div>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
-  <main class="min-h-screen">
-    <router-view></router-view>
-  </main>
 </template>
 
 <style scoped></style>

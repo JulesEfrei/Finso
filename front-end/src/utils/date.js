@@ -9,3 +9,16 @@ export function formatDateToDMY(date) {
 
   return mm + "/" + dd + "/" + yyyy;
 }
+
+const firstDateOfMonth = (date = new Date()) =>
+  new Date(date.getFullYear(), date.getMonth(), 1);
+
+const lastDateOfMonth = (date = new Date()) =>
+  new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+export function monthlyDate() {
+  return [
+    formatDateToDMY(firstDateOfMonth()),
+    formatDateToDMY(lastDateOfMonth()),
+  ];
+}

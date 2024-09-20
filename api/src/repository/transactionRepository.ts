@@ -1,4 +1,4 @@
-import { and, asc, count, eq, sql } from "drizzle-orm";
+import { and, count, desc, eq, sql } from "drizzle-orm";
 import { NewTransaction, transactions } from "../db/schema/transaction";
 import { db } from "../utils/database";
 
@@ -47,22 +47,22 @@ export async function getUserTransactionsBy(
   if (options?.startDate) {
     if (options?.endDate) {
       filters.push(
-        `(date >= ${options.startDate} AND date <= ${options.endDate})`
+        `(date >= '${options.startDate}' AND date <= '${options.endDate}')`
       );
     } else {
-      filters.push(`date >= ${options.startDate}`);
+      filters.push(`date >= '${options.startDate}'`);
     }
   }
 
   if (options?.endDate) {
-    filters.push(`date <= ${options.endDate})`);
+    filters.push(`date <= '${options.endDate}'`);
   }
 
   return db
     .select()
     .from(transactions)
     .where(sql.raw(`${filters.join(" AND ")}`))
-    .orderBy(asc(transactions.date))
+    .orderBy(desc(transactions.date))
     .limit(Number(options?.limit) || 50)
     .offset(Number(options?.offset) || 0);
 }
@@ -79,6 +79,19 @@ export async function getMaxTransactions(userId: string | number) {
     .select({ count: count() })
     .from(transactions)
     .where(eq(transactions.user, Number(userId)));
+}
+
+export async function getAverageTransactionsByMonth(userId: string | number) {
+  return db
+    .select({
+      month: sql`TO_CHAR(${transactions.date}, 'YYYY-MM')`,
+      averageIncome: sql`AVG(CASE WHEN ${transactions.type} = 'income' THEN ${transactions.amount} END)`,
+      averageOutcome: sql`AVG(CASE WHEN ${transactions.type} = 'outcome' THEN ${transactions.amount} END)`,
+    })
+    .from(transactions)
+    .where(eq(transactions.user, Number(userId)))
+    .groupBy(sql`TO_CHAR(${transactions.date}, 'YYYY-MM')`)
+    .orderBy(sql`TO_CHAR(${transactions.date}, 'YYYY-MM')`);
 }
 
 export async function getCategories(userId: string | number) {

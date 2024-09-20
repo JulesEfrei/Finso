@@ -2,6 +2,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { defineProps } from 'vue';
+import Chip from 'primevue/chip';
 
 const props = defineProps({
     transactions: Array,
@@ -27,8 +28,8 @@ const props = defineProps({
         <Column field="date" header="Date" />
         <Column field="category" header="Category">
             <template #body="slotProps">
-                <span v-if="slotProps.data.category">{{ slotProps.data.category }}</span>
-                <span v-else>N/A</span>
+                <Chip v-if="slotProps.data.category" :label="slotProps.data.category" />
+                <Chip v-else label="N/A"></Chip>
             </template>
         </Column>
     </DataTable>

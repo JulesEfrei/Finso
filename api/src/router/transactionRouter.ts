@@ -4,6 +4,7 @@ import { verifyToken } from "../utils/authUtils";
 import { wrapReturnObject } from "../utils/returnFormat";
 import {
   deleteUserTransaction,
+  getAverageTransactions,
   getTransactionsCategories,
   getUserTransaction,
   getUserTransactions,
@@ -47,6 +48,9 @@ transactionRouter.get("/categories", async (c) => getTransactionsCategories(c));
 
 //Get transaction by id
 transactionRouter.get("/:transactionId", async (c) => getUserTransaction(c));
+
+//Get average amount by type and month
+transactionRouter.get("/insight/month", async (c) => getAverageTransactions(c));
 
 //New transaction
 transactionRouter.post("/", async (c) => newTransaction(c));

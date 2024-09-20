@@ -20,7 +20,7 @@ async function register() {
     isLoading.value = true;
 
     try {
-        const res = await fetchWrapper.post("http://localhost:3000/api/auth/register", {
+        const res = await fetchWrapper.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, {
             name: name.value,
             email: email.value,
             password: password.value

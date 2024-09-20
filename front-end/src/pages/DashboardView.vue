@@ -46,11 +46,11 @@ async function fetchAll() {
         monthlyStats: true,
     }
 
-    await fetchTransactions(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions?startDate=${startMonthDate}&endDate=${endMonthDate}`, 'monthlyTransactions');
-    await fetchTransactions(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions/insight/month`, 'monthlyStats');
+    await fetchTransactions(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions?startDate=${startMonthDate}&endDate=${endMonthDate}`, 'monthlyTransactions');
+    await fetchTransactions(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions/insight/month`, 'monthlyStats');
 
     if (!transactions.value.monthlyTransactions) {
-        await fetchTransactions(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions?limit=3`, 'latest');
+        await fetchTransactions(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions?limit=3`, 'latest');
     } else {
         transactions.value.latest = transactions.value.monthlyTransactions.slice(0, 3);
         isLoading.value.latest = false;

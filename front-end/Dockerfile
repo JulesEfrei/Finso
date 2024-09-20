@@ -1,9 +1,8 @@
 FROM oven/bun:1 as build-stage
 WORKDIR /app
 COPY package.json bun.lockb .
-RUN bun install --frozen-lockfile
+RUN bun install --frozen-lockfile --production
 COPY . .
-# Run bun test
 RUN bun run build
 
 

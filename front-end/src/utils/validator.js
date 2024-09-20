@@ -1,7 +1,7 @@
-export function isEmail(email) {
+export function isEmail(email, strict = false) {
   return (
-    email === "" ||
-    email.match(
+    (!strict && email === "" ? true : false) ||
+    (email || "").match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )
   );

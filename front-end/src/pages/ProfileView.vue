@@ -24,13 +24,13 @@ const isLoading = ref(false);
 
 async function submitProfile() {
     try {
-        if (editedUserData.value.email && !isEmail(editedUserData.value.email)) {
+        if (!isEmail(editedUserData.value.email, true)) {
             isLoading.value = false;
             toast.add({ severity: 'error', summary: "Invalid email", life: 3000 });
             return;
         }
 
-        const user = await fetchWrapper.patch(`http://localhost:3000/api/users/${storedUser.id}`, {
+        const user = await fetchWrapper.patch(`${import.meta.env.VITE_BASE_URL}/users/${storedUser.id}`, {
             name: editedUserData.value.name,
             email: editedUserData.value.email,
         });
@@ -56,7 +56,7 @@ async function submitProfile() {
 async function submitPassword(newPassword) {
     isLoading.value = true;
     try {
-        const user = await fetchWrapper.patch(`http://localhost:3000/api/users/${storedUser.id}`, {
+        const user = await fetchWrapper.patch(`${import.meta.env.VITE_BASE_URL}/users/${storedUser.id}`, {
             password: newPassword.value
         });
 

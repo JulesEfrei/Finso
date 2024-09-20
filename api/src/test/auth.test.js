@@ -70,7 +70,7 @@ describe("Testing POST => /login endpoint", () => {
 
     const json = await res.json();
     expect(json.error).toEqual(false);
-    expect(json.data).toBeTypeOf("string");
+    expect(json.data).toBeTypeOf("object");
   });
 
   test("Fail login (Missing field)", async () => {

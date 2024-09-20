@@ -7,6 +7,7 @@ import Card from 'primevue/card';
 import { useAuthStore } from '@/stores/auth.store.js';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
+import { isEmail } from '../utils/validator';
 
 const email = ref("");
 const password = ref("");
@@ -26,12 +27,6 @@ async function login() {
         isLoading.value = false;
         toast.add({ severity: 'error', summary: e.message, details: 'Please try again.', life: 3000 });
     }
-}
-
-function isEmail(email) {
-    return email === "" || email.match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
 }
 
 const toast = useToast();

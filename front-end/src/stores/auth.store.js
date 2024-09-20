@@ -13,7 +13,7 @@ export const useAuthStore = defineStore({
   actions: {
     async login(email, password) {
       const { data } = await fetchWrapper.post(
-        "http://localhost:3000/api/auth/login",
+        `${import.meta.env.VITE_BASE_URL}/auth/login`,
         {
           email,
           password,

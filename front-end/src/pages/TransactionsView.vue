@@ -22,7 +22,7 @@ const isLoading = ref(true);
 
 async function getCategories() {
     try {
-        const res = await fetchWrapper.get(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions/categories`)
+        const res = await fetchWrapper.get(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions/categories`)
 
         if (res) {
             categories.value = res.data.categories || [];
@@ -40,7 +40,7 @@ async function getTransactions(filtersOptions = {}) {
         const filters = Object.keys(filtersOptions).reduce((prev, curr, index) => [...prev, curr + "=" + filtersOptions[curr]], []).join("&");
         console.log(filters);
 
-        const res = await fetchWrapper.get(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions?${filters}`)
+        const res = await fetchWrapper.get(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions?${filters}`)
 
         if (res) {
             transactions.value = res.data.transactions || [];

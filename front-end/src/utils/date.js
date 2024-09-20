@@ -10,15 +10,15 @@ export function formatDateToDMY(date) {
   return mm + "/" + dd + "/" + yyyy;
 }
 
-const firstDateOfMonth = (date = new Date()) =>
+export const firstDateOfMonth = (date = new Date()) =>
   new Date(date.getFullYear(), date.getMonth(), 1);
 
-const lastDateOfMonth = (date = new Date()) =>
+export const lastDateOfMonth = (date = new Date()) =>
   new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-export function monthlyDate() {
+export function monthlyDate(date = new Date()) {
   return [
-    formatDateToDMY(firstDateOfMonth()),
-    formatDateToDMY(lastDateOfMonth()),
+    formatDateToDMY(firstDateOfMonth(date)),
+    formatDateToDMY(lastDateOfMonth(date)),
   ];
 }

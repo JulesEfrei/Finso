@@ -32,7 +32,7 @@ async function newTransaction() {
     }
 
     try {
-        const transaction = await fetchWrapper.post(`http://localhost:3000/api/users/${useAuthStore().user.id}/transactions`, {
+        const transaction = await fetchWrapper.post(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions`, {
             name: name.value,
             amount: amount.value,
             type: type.value,

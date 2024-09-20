@@ -117,18 +117,30 @@ API endpoints:
 
 Here is the updated markdown table with a "Body Params" column for the specified endpoints:
 
-| Method | Endpoint                                        | Parameters            | Body Params                                                                              | Description                          |
-| ------ | ----------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------ |
-| GET    | /api/health                                     | N/A                   | N/A                                                                                      | Check the health of the API          |
-| GET    | /api/users/{userId}/transactions                | userId                | N/A                                                                                      | Get all transactions of the user     |
-| GET    | /api/users/{userId}/transactions/{type}         | userId, type          | N/A                                                                                      | Get transactions of the user by type |
-| GET    | /api/users/{userId}/transaction/{transactionId} | userId, transactionId | N/A                                                                                      | Get a specific transaction by ID     |
-| POST   | /api/users/{userId}/transaction                 | userId                | {name: string, amount: number, date: date, type: "income"\|"outcome", category?: string} | Add a new transaction                |
-| DELETE | /api/users/{userId}/transaction/{transactionId} | userId, transactionId | N/A                                                                                      | Delete a specific transaction by ID  |
-| PUT    | /api/users/{id}                                 | id                    | {name: string, email: string, password: string}                                          | Modify user information              |
-| DELETE | /api/users/{id}                                 | id                    | N/A                                                                                      | Delete the user by ID                |
-| POST   | /api/auth/login                                 | N/A                   | {email: string, password: string}                                                        | Authenticate user (login)            |
-| POST   | /api/auth/register                              | N/A                   | {name: string, email: string, password: string}                                          | Register a new user                  |
+| Method | Endpoint                                         | Parameters            | Body Params                                                                              | Description                             |
+| ------ | ------------------------------------------------ | --------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------- |
+| GET    | /api/health                                      | N/A                   | N/A                                                                                      | Check the health of the API             |
+| POST   | /api/auth/register                               | N/A                   | {name: string, email: string, password: string}                                          | Register a new user                     |
+| POST   | /api/auth/login                                  | N/A                   | {email: string, password: string}                                                        | Authenticate user (login)               |
+| PUT    | /api/users/{id}                                  | id                    | {name: string, email: string, password: string}                                          | Modify user information                 |
+| DELETE | /api/users/{id}                                  | id                    | N/A                                                                                      | Delete the user by ID                   |
+| GET    | /api/users/{userId}/transactions                 | userId                | N/A                                                                                      | Get all transactions of the user        |
+| GET    | /api/users/{userId}/transactions/categories      | userId                | N/A                                                                                      | Get transactions categories of the user |
+| GET    | /api/users/{userId}/transactions/{transactionId} | userId, transactionId | N/A                                                                                      | Get a specific transaction by ID        |
+| GET    | /api/users/{userId}/transactions/insight/month   | userId                | N/A                                                                                      | Get average income and outcome by month |
+| POST   | /api/users/{userId}/transactions                 | userId                | {name: string, amount: number, date: date, type: "income"\|"outcome", category?: string} | Add a new transaction                   |
+| DELETE | /api/users/{userId}/transactions/{transactionId} | userId, transactionId | N/A                                                                                      | Delete a specific transaction by ID     |
+
+> Speicificity for the GET => /api/users/{userId}/transactions endpoint.
+> You can user url params to filter the result. Here is the filter available:
+>
+> - name
+> - type
+> - minAmount
+> - maxAmount
+> - startDate
+> - endDate
+> - category
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
@@ -140,17 +152,33 @@ Here is the updated markdown table with a "Body Params" column for the specified
 
 Here is the roadmap of the project. Checked flags mean the features is out and unchecked flags mean that the feature is comming.
 
-- [x] JWT Authentication
-- [x] Docker configuration
-- [x] Create account
-- [x] CRUD on transaction
-- [x] API testing
-- [ ] Dashboard view
-- [ ] Profile view
-- [ ] Transaction list history view
-- [x] Quick add transaction modal
-- [ ] Front-end testing
-- [ ] End-to-end testing
+- [x] Architecture
+  - [x] Docker configuration
+  - [ ] Pipiline on main
+- [x] Front-end
+  - [x] Dashboard view
+  - [x] Profile view
+  - [x] Transaction list view
+  - [x] Login / Register view
+  - [x] Quick add transaction modal
+  - [x] Redirect when not logged
+  - [x] Logout
+  - [x] Auth store with Pinia
+  - [x] Dark mode (based on user's system preference)
+  - [x] Responsive
+- [ ] Back-end API
+  - [x] Create database schema
+  - [x] JWT Authentication
+  - [x] Auth routes
+  - [x] Transactins routes
+    - [x] CRUD
+    - [x] Transactions filters
+  - [x] User routes
+  - [ ] Revalidate JWT token
+- [ ] Testing
+  - [x] API unit testing
+  - [x] Front-end unit testing
+  - [ ] End-to-end testing
 
 See the [open issues](https://github.com/JulesEfrei/Finso/issues) for a full list of proposed features (and known issues).
 

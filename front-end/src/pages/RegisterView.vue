@@ -4,8 +4,8 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
-import { router } from '../main.js';
-import { fetchWrapper } from '../utils/fetchWrapper';
+import { router } from '@/main.js';
+import { fetchWrapper } from '@/utils/fetchWrapper';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 import { isEmail } from "../utils/validator.js"
@@ -29,6 +29,7 @@ async function register() {
         if (res) {
             isLoading.value = false;
             toast.add({ severity: 'success', summary: 'Your account has been successfuly created!', life: 3000 });
+            router.push("/login");
         }
     } catch (e) {
         isLoading.value = false;

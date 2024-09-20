@@ -8,9 +8,9 @@ import DatePicker from 'primevue/datepicker';
 import { ref, defineProps } from "vue";
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
-import { fetchWrapper } from '../utils/fetchWrapper';
-import { formatDateToDMY } from '../utils/date.js';
-import { useAuthStore } from '../stores/auth.store.js';
+import { fetchWrapper } from '@/utils/fetchWrapper';
+import { formatDateToDMY } from '@/utils/date.js';
+import { useAuthStore } from '@/stores/auth.store.js';
 
 const props = defineProps({ visible: Boolean, closeModal: Function });
 

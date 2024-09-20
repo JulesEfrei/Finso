@@ -3,12 +3,12 @@ import { ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
-import PasswordModal from '../components/PassordModal.vue';
-import { useAuthStore } from '../stores/auth.store';
+import PasswordModal from '@/components/PassordModal.vue';
+import { useAuthStore } from '@/stores/auth.store';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
-import { fetchWrapper } from '../utils/fetchWrapper';
-import { isEmail } from "../utils/validator";
+import { fetchWrapper } from '@/utils/fetchWrapper';
+import { isEmail } from "@/utils/validator";
 
 const storedUser = useAuthStore().user;
 

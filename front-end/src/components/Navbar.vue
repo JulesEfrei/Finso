@@ -2,8 +2,8 @@
 import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
 import { ref } from "vue";
-import { useAuthStore } from "../stores/auth.store.js"
-import TransactionModal from "./TransactionModal.vue"
+import { useAuthStore } from "@/stores/auth.store.js"
+import TransactionModal from "@/components/TransactionModal.vue"
 
 const items = ref([
     {

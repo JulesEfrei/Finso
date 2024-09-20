@@ -3,19 +3,33 @@ import { Context } from "hono";
 import { BlankEnv, BlankInput } from "hono/types";
 import {
   createTransaction,
+  getCategories,
+  getMaxTransactions,
   getTransactionById,
-  getUserTransactionsByType,
+  getUserTransactionsBy,
   removeTransaction,
 } from "../repository/transactionRepository";
 
 export async function getUserTransactions(
-  c: Context<BlankEnv, "/:userId/:type?", BlankInput>
+  c: Context<BlankEnv, "/:userId", BlankInput>
 ) {
-  const { userId, type } = c.req.param();
+  const { userId } = c.req.param();
 
   try {
-    const allTransactionsOfUser = await getUserTransactionsByType(userId, type);
-    return c.json(wrapReturnObject(200, null, allTransactionsOfUser), 200);
+    const allTransactionsOfUser = await getUserTransactionsBy(
+      userId,
+      c.req.query()
+    );
+
+    const maxTransactions = await getMaxTransactions(userId);
+
+    return c.json(
+      wrapReturnObject(200, null, {
+        transactions: allTransactionsOfUser,
+        maxTransactions: maxTransactions["0"].count,
+      }),
+      200
+    );
   } catch (e) {
     return c.json(wrapReturnObject(400), 400);
   }
@@ -38,6 +52,19 @@ export async function getUserTransaction(
     }
 
     return c.json(wrapReturnObject(200, null, transaction[0]), 200);
+  } catch (e) {
+    return c.json(wrapReturnObject(400), 400);
+  }
+}
+
+export async function getTransactionsCategories(
+  c: Context<BlankEnv, "/:userId", BlankInput>
+) {
+  const { userId } = c.req.param();
+
+  try {
+    const categories = await getCategories(userId);
+    return c.json(wrapReturnObject(200, null, categories), 200);
   } catch (e) {
     return c.json(wrapReturnObject(400), 400);
   }

@@ -4,7 +4,7 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
-import { useAuthStore } from '../stores/auth.store.js';
+import { useAuthStore } from '@/stores/auth.store.js';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 

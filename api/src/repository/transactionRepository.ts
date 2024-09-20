@@ -1,24 +1,70 @@
-import { and, eq } from "drizzle-orm";
+import { and, asc, count, eq, sql } from "drizzle-orm";
 import { NewTransaction, transactions } from "../db/schema/transaction";
 import { db } from "../utils/database";
 
-export async function getUserTransactionsByType(
+export async function getUserTransactionsBy(
   userId: string | number,
-  type?: string
+  options?: {
+    type?: string;
+    category?: string;
+    startDate?: string;
+    endDate?: string;
+    minAmount?: string;
+    maxAmount?: string;
+    search?: string;
+    limit?: string;
+    offset?: string;
+  }
 ) {
-  const filter = type
-    ? type === "income"
-      ? and(
-          eq(transactions.user, Number(userId)),
-          eq(transactions.type, "income")
-        )
-      : and(
-          eq(transactions.user, Number(userId)),
-          eq(transactions.type, "outcome")
-        )
-    : eq(transactions.user, Number(userId));
+  let filters = [`user_id = ${userId}`];
 
-  return db.select().from(transactions).where(filter);
+  if (options?.type) {
+    filters.push(`transaction_type = '${options.type}'`);
+  }
+
+  if (options?.category) {
+    filters.push(`category = '${options.category}'`);
+  }
+
+  if (options?.search) {
+    filters.push(`name LIKE '%${options.search}%'`);
+  }
+
+  if (options?.minAmount) {
+    if (options?.maxAmount) {
+      filters.push(
+        `(amount >= ${options.minAmount} AND amount <= ${options.maxAmount})`
+      );
+    } else {
+      filters.push(`amount >= ${options.minAmount}`);
+    }
+  }
+
+  if (options?.maxAmount) {
+    filters.push(`amount <= ${options.maxAmount})`);
+  }
+
+  if (options?.startDate) {
+    if (options?.endDate) {
+      filters.push(
+        `(date >= ${options.startDate} AND date <= ${options.endDate})`
+      );
+    } else {
+      filters.push(`date >= ${options.startDate}`);
+    }
+  }
+
+  if (options?.endDate) {
+    filters.push(`date <= ${options.endDate})`);
+  }
+
+  return db
+    .select()
+    .from(transactions)
+    .where(sql.raw(`${filters.join(" AND ")}`))
+    .orderBy(asc(transactions.date))
+    .limit(Number(options?.limit) || 50)
+    .offset(Number(options?.offset) || 0);
 }
 
 export async function getTransactionById(transactionId: string | number) {
@@ -26,6 +72,20 @@ export async function getTransactionById(transactionId: string | number) {
     .select()
     .from(transactions)
     .where(eq(transactions.id, Number(transactionId)));
+}
+
+export async function getMaxTransactions(userId: string | number) {
+  return db
+    .select({ count: count() })
+    .from(transactions)
+    .where(eq(transactions.user, Number(userId)));
+}
+
+export async function getCategories(userId: string | number) {
+  return db
+    .selectDistinct({ categories: transactions.category })
+    .from(transactions)
+    .where(eq(transactions.user, Number(userId)));
 }
 
 export async function createTransaction(

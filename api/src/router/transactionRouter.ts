@@ -4,6 +4,7 @@ import { verifyToken } from "../utils/authUtils";
 import { wrapReturnObject } from "../utils/returnFormat";
 import {
   deleteUserTransaction,
+  getTransactionsCategories,
   getUserTransaction,
   getUserTransactions,
   newTransaction,
@@ -39,9 +40,10 @@ transactionRouter.use("*", async (c, next) => {
 });
 
 //Get all tasks of user
-transactionRouter.on("GET", ["/", "/type/:type?"], async (c) =>
-  getUserTransactions(c)
-);
+transactionRouter.get("/", async (c) => getUserTransactions(c));
+
+//Get all transactions categories of user
+transactionRouter.get("/categories", async (c) => getTransactionsCategories(c));
 
 //Get transaction by id
 transactionRouter.get("/:transactionId", async (c) => getUserTransaction(c));

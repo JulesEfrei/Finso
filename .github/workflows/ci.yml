@@ -37,9 +37,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
 
       ### Frontend steps
+      # Clean node_modules and package-lock.json before installing dependencies
+      - name: Clean node_modules and package-lock.json
+        working-directory: ./front-end
+        run: |
+          rm -rf node_modules package-lock.json
 
       # Install frontend dependencies
       - name: Install frontend dependencies
@@ -57,6 +62,11 @@ jobs:
         run: npm run build
 
       ### Backend (API) steps
+      # Clean node_modules and package-lock.json before installing dependencies
+      - name: Clean node_modules and package-lock.json
+        working-directory: ./api
+        run: |
+          rm -rf node_modules package-lock.json
 
       # Install backend dependencies
       - name: Install backend dependencies

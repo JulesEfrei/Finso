@@ -100,7 +100,7 @@ jobs:
       # Run Playwright E2E tests
       - name: Run Playwright End-to-End Tests
         working-directory: ./front-end # Assuming your Playwright tests are located in the frontend project
-        run: npm run playwright test authTests.spec.ts
+        run: npm run playwright test e2e
 
       # Optionally upload artifacts (e.g., frontend build, API build)
       - name: Upload build artifacts

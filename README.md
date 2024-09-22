@@ -154,7 +154,7 @@ Here is the roadmap of the project. Checked flags mean the features is out and u
 
 - [x] Architecture
   - [x] Docker configuration
-  - [ ] Pipiline on main
+  - [x] Pipiline on main
 - [x] Front-end
   - [x] Dashboard view
   - [x] Profile view
@@ -178,7 +178,8 @@ Here is the roadmap of the project. Checked flags mean the features is out and u
 - [ ] Testing
   - [x] API unit testing
   - [x] Front-end unit testing
-  - [ ] End-to-end testing
+  - [x] End-to-end testing
+  - [ ] Test coverage > 90%
 
 See the [open issues](https://github.com/JulesEfrei/Finso/issues) for a full list of proposed features (and known issues).
 

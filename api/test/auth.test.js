@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import app from "../..";
+import app from "..";
 
 const userEmail = "test" + Math.random() * 100 * Math.random() + "@user.com";
 

@@ -1,0 +1,102 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    services:
+      # If your API depends on a database (optional)
+      db:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mydb
+        options: >-
+          --health-cmd="pg_isready -U user" 
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js for both frontend and backend
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      ### Frontend steps
+
+      # Install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: ./front-end
+        run: npm install
+
+      # Run frontend unit tests
+      - name: Run frontend unit tests
+        working-directory: ./front-end
+        run: npm run test
+
+      # Build the frontend
+      - name: Build frontend
+        working-directory: ./front-end
+        run: npm run build
+
+      ### Backend (API) steps
+
+      # Install backend dependencies
+      - name: Install backend dependencies
+        working-directory: ./api
+        run: npm install
+
+      # Run backend unit tests
+      - name: Run backend unit tests
+        working-directory: ./api
+        run: npm run test
+
+      # Build backend (if necessary)
+      - name: Build backend
+        working-directory: ./api
+        run: npm run build
+
+      ### End-to-End Tests using Playwright
+
+      # Install Playwright dependencies (global step)
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
+
+      - name: Start API server
+        working-directory: ./api
+        run: npm start &
+
+      - name: Start Frontend server
+        working-directory: ./frontend
+        run: npm start &
+
+      # Run Playwright E2E tests
+      - name: Run Playwright End-to-End Tests
+        working-directory: ./front-end # Assuming your Playwright tests are located in the frontend project
+        run: npm run playwright test authTests.spec.ts
+
+      # Optionally upload artifacts (e.g., frontend build, API build)
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            ./frontend/build
+            ./api/build

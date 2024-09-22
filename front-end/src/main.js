@@ -9,7 +9,7 @@ import ProfileView from "./pages/ProfileView.vue";
 import TransactionsView from "./pages/TransactionsView.vue";
 import LoginView from "./pages/LoginView.vue";
 import RegisterView from "./pages/RegisterView.vue";
-import { createRouter, createMemoryHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "./stores/auth.store";
 import { createPinia } from "pinia";
 import ToastService from "primevue/toastservice";
@@ -23,7 +23,7 @@ const routes = [
 ];
 
 export const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 

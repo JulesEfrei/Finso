@@ -1,5 +1,5 @@
-import { describe, expect, test } from "vitest";
-import { formatDateToDMY, monthlyDate } from "../utils/date";
+import { expect, test } from "vitest";
+import { formatDateToDMY, monthlyDate } from "../src/utils/date";
 
 test("Testing format date method to DD/MM/YY", () => {
   expect(formatDateToDMY(null)).toBe("01/01/1970");

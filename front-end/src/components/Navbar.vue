@@ -26,6 +26,7 @@ const items = ref([
     {
         label: 'Account',
         icon: 'pi pi-user',
+        testId: 'dropdown',
         items: [
             {
                 label: 'Profile',
@@ -34,6 +35,7 @@ const items = ref([
             },
             {
                 label: 'Logout',
+                testId: 'logout',
                 icon: 'pi pi-sign-out',
                 command: () => {
                     useAuthStore().logout();
@@ -76,7 +78,7 @@ function closeModal() {
                                     item.shortcut }}</span>
                         </a>
                     </router-link>
-                    <button v-else v-bind="props.action">
+                    <button v-else v-bind="props.action" :data-testid="item.testId || ''">
                         <span v-if="item.icon" :class="item.icon" />
                         <span class="ml-2">{{ item.label }}</span>
                         <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />

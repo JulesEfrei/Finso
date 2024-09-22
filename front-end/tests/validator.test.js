@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isEmail } from "@/utils/validator";
+import { isEmail } from "../src/utils/validator";
 
 describe("Testing email validator", () => {
   test("Success", () => {

@@ -41,18 +41,19 @@ const toast = useToast();
                 <div class="flex flex-col gap-4 my-6 w-full">
                     <div class="flex flex-col gap-2">
                         <label for="email">Email</label>
-                        <InputText type="email" id="email" v-model="email" placeholder="Email"
+                        <InputText type="email" data-testid="email" id="email" v-model="email" placeholder="Email"
                             :invalid="!isEmail(email)" />
 
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="password">Password</label>
-                        <Password id="password" :feedback="false" v-model="password" placeholder="Password"
-                            toggleMask />
+                        <Password id="password" data-testid="password" :feedback="false" v-model="password"
+                            placeholder="Password" toggleMask />
                     </div>
                 </div>
                 <div class="flex justify-center">
-                    <Button type="button" size="small" label="Login" :loading="isLoading" @click="login" />
+                    <Button type="button" size="small" data-testid="submit" label="Login" :loading="isLoading"
+                        @click="login" />
                 </div>
             </template>
             <template #footer>

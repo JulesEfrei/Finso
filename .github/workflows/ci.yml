@@ -83,10 +83,6 @@ jobs:
         working-directory: ./api
         run: bun install
 
-      # Wait for Postgres to be ready
-      - name: Wait for PostgreSQL
-        run: npx wait-on tcp:db:5432
-
       # Run backend unit tests
       - name: Run backend unit tests
         working-directory: ./api
@@ -140,18 +136,10 @@ jobs:
         working-directory: ./api
         run: bun run dev &
 
-      # Wait for backend to be ready
-      - name: Wait for API to be ready
-        run: npx wait-on http://localhost:3000 # Ajuste le port si nécessaire
-
       # Start frontend server
       - name: Start Frontend server
         working-directory: ./front-end
         run: bun run dev &
-
-      # Wait for frontend to be ready
-      - name: Wait for Frontend to be ready
-        run: npx wait-on http://localhost:3001 # Ajuste le port si nécessaire
 
       # Run Playwright E2E tests
       - name: Run Playwright End-to-End Tests

@@ -60,10 +60,9 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-- What the application does ?
-- State of the Project (Alpha, Beta, Realeased)
+- State of the Project -> _v.1.0.0_
 - Main difficulties - [Roadmap](#roadmap)
 
 <p align="right">(<a href="#top">back to top</a>)</p>

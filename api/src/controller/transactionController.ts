@@ -65,7 +65,14 @@ export async function getTransactionsCategories(
 
   try {
     const categories = await getCategories(userId);
-    return c.json(wrapReturnObject(200, null, categories), 200);
+    return c.json(
+      wrapReturnObject(
+        200,
+        null,
+        categories.map((elm) => elm.category)
+      ),
+      200
+    );
   } catch (e) {
     return c.json(wrapReturnObject(400), 400);
   }

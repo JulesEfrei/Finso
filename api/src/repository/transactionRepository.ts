@@ -96,7 +96,7 @@ export async function getAverageTransactionsByMonth(userId: string | number) {
 
 export async function getCategories(userId: string | number) {
   return db
-    .selectDistinct({ categories: transactions.category })
+    .selectDistinct({ category: transactions.category })
     .from(transactions)
     .where(eq(transactions.user, Number(userId)));
 }

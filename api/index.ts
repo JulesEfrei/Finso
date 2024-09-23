@@ -21,7 +21,11 @@ app.use("*", async (c, next) => {
 app.use(
   "/api/*",
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:8080",
+      "http://front-end:8080",
+    ],
     allowMethods: ["POST", "GET", "PATCH", "DELETE"],
   })
 );

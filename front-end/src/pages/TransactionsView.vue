@@ -25,7 +25,7 @@ async function getCategories() {
         const res = await fetchWrapper.get(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions/categories`)
 
         if (res) {
-            categories.value = res.data.categories || [];
+            categories.value = res.data ? ["All", ...res.data.filter(elm => elm)] : [];
         }
     } catch (e) {
         toast.add({ severity: 'error', summary: e.message, details: 'Please try again.', life: 3000 });
@@ -35,10 +35,7 @@ async function getCategories() {
 async function getTransactions(filtersOptions = {}) {
     isLoading.value = true;
     try {
-        console.log("Test");
-
         const filters = Object.keys(filtersOptions).reduce((prev, curr, index) => [...prev, curr + "=" + filtersOptions[curr]], []).join("&");
-        console.log(filters);
 
         const res = await fetchWrapper.get(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions?${filters}`)
 
@@ -80,6 +77,10 @@ const handleFilter = async (filters) => {
             ...newFilters.value,
             ...checkAmountFilter(filters.amount)
         };
+    }
+
+    if (filters.category === "All") {
+        delete newFilters.category
     }
 
     newFilters.offset = 0;

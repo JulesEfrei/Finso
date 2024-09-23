@@ -93,11 +93,11 @@ jobs:
 
       - name: Start API server
         working-directory: ./api
-        run: bun start &
+        run: bun run dev &
 
       - name: Start Frontend server
         working-directory: ./frontend
-        run: bun start &
+        run: bun run dev &
 
       # Run Playwright E2E tests
       - name: Run Playwright End-to-End Tests

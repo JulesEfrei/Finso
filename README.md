@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   
-  <img src="images/logo.png" alt="Logo" width="80" height="80" />
+  <!-- <img src="images/logo.png" alt="Logo" width="80" height="80" /> -->
   <!-- https://drive.google.com/uc?export=view&id=      => Google drive Link -->
 
   <h2 align="center">Finso</h2>
@@ -91,21 +91,50 @@ To get a local copy up and running follow these simple example steps.
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/JulesEfrei_/Finso.git
    ```
-2. Setup environment variables
+
+2. Setup environment variables (You can simply duplicate `.env.dist` file to `.env`)
+
    ```.env
    DB_HOST=db (Should be db if you're using docker, or localhost if running it withtout docker)
    DB_NAME=my_db
    DB_USER=root
    DB_PASSWORD=password
    JWT_SECRET=your-secret-key
+   VITE_BASE_URL=http://localhost:3000/api
    ```
+
 3. Run the application
-   ```bash
-   docker compose up -d
-   ```
+
+   - Dev mode
+     ```bash
+     docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+     ```
+   - Production mode
+     ```bash
+     docker compose -f docker-compose.yml up -d
+     ```
+
+4. Make database migration & import data fixtures
+
+```bash
+docker compose exec api bun run setup
+```
+
+5. Enjoy the application
+
+```plainText
+// DEV MODE \\
+API => http://localhost:3000
+FRONT-END => http://localhost:5173
+
+// PROD MODE \\
+API => http://localhost:3000
+FRONT-END => http://localhost:8080
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

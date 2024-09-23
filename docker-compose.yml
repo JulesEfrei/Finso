@@ -56,4 +56,3 @@ volumes:
 # Networks for service communication
 networks:
   app_network:
-    driver: bridge

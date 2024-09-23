@@ -11,9 +11,10 @@
   "scripts": {
     "dev": "bun --watch run index.ts",
     "make-migration": "bun drizzle-kit generate",
-    "migrate": "bun run src/db/utils/migrate.ts",
+    "migrate": "bun run src/utils/migrate.ts",
     "test": "vitest",
-    "build": "bun build index.ts --outdir ./dist --target bun"
+    "build": "bun build index.ts --outdir ./dist --target bun",
+    "setup": "bun run migrate && bun run src/utils/dataFixture.ts"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

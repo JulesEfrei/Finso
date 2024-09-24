@@ -117,7 +117,7 @@ To get a local copy up and running follow these simple example steps.
      docker compose -f docker-compose.yml up -d
      ```
 
-4. Make database migration & import data fixtures
+4. Make database migration & import data fixtures based on your mode (dev or production)
 
 ```bash
 docker compose exec api bun run setup <dev | prod>

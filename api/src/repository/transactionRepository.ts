@@ -2,61 +2,23 @@ import { and, count, desc, eq, sql } from "drizzle-orm";
 import { NewTransaction, transactions } from "../db/schema/transaction";
 import { db } from "../utils/database";
 
+interface FilterType {
+  type?: string;
+  category?: string;
+  startDate?: string;
+  endDate?: string;
+  minAmount?: string;
+  maxAmount?: string;
+  search?: string;
+  limit?: string;
+  offset?: string;
+}
+
 export async function getUserTransactionsBy(
   userId: string | number,
-  options?: {
-    type?: string;
-    category?: string;
-    startDate?: string;
-    endDate?: string;
-    minAmount?: string;
-    maxAmount?: string;
-    search?: string;
-    limit?: string;
-    offset?: string;
-  }
+  options?: FilterType
 ) {
-  let filters = [`user_id = ${userId}`];
-
-  if (options?.type) {
-    filters.push(`transaction_type = '${options.type}'`);
-  }
-
-  if (options?.category) {
-    filters.push(`category = '${options.category}'`);
-  }
-
-  if (options?.search) {
-    filters.push(`name LIKE '%${options.search}%'`);
-  }
-
-  if (options?.minAmount) {
-    if (options?.maxAmount) {
-      filters.push(
-        `(amount >= ${options.minAmount} AND amount <= ${options.maxAmount})`
-      );
-    } else {
-      filters.push(`amount >= ${options.minAmount}`);
-    }
-  }
-
-  if (options?.maxAmount) {
-    filters.push(`amount <= ${options.maxAmount})`);
-  }
-
-  if (options?.startDate) {
-    if (options?.endDate) {
-      filters.push(
-        `(date >= '${options.startDate}' AND date <= '${options.endDate}')`
-      );
-    } else {
-      filters.push(`date >= '${options.startDate}'`);
-    }
-  }
-
-  if (options?.endDate) {
-    filters.push(`date <= '${options.endDate}'`);
-  }
+  let filters = filtersToSQL(userId, options);
 
   return db
     .select()
@@ -74,11 +36,16 @@ export async function getTransactionById(transactionId: string | number) {
     .where(eq(transactions.id, Number(transactionId)));
 }
 
-export async function getMaxTransactions(userId: string | number) {
+export async function getMaxTransactions(
+  userId: string | number,
+  options?: FilterType
+) {
+  let filters = filtersToSQL(userId, options);
+
   return db
     .select({ count: count() })
     .from(transactions)
-    .where(eq(transactions.user, Number(userId)));
+    .where(sql.raw(`${filters.join(" AND ")}`));
 }
 
 export async function getAverageTransactionsByMonth(userId: string | number) {
@@ -123,4 +90,50 @@ export async function removeTransaction(
         eq(transactions.user, Number(userId))
       )
     );
+}
+
+function filtersToSQL(userId: string | number, options?: FilterType) {
+  let filters = [`user_id = ${userId}`];
+
+  if (options?.type) {
+    filters.push(`transaction_type = '${options.type}'`);
+  }
+
+  if (options?.category) {
+    filters.push(`category = '${options.category}'`);
+  }
+
+  if (options?.search) {
+    filters.push(`name LIKE '%${options.search}%'`);
+  }
+
+  if (options?.minAmount) {
+    if (options?.maxAmount) {
+      filters.push(
+        `(amount >= ${options.minAmount} AND amount <= ${options.maxAmount})`
+      );
+    } else {
+      filters.push(`amount >= ${options.minAmount}`);
+    }
+  }
+
+  if (options?.maxAmount) {
+    filters.push(`amount <= ${options.maxAmount})`);
+  }
+
+  if (options?.startDate) {
+    if (options?.endDate) {
+      filters.push(
+        `(date >= '${options.startDate}' AND date <= '${options.endDate}')`
+      );
+    } else {
+      filters.push(`date >= '${options.startDate}'`);
+    }
+  }
+
+  if (options?.endDate) {
+    filters.push(`date <= '${options.endDate}'`);
+  }
+
+  return filters;
 }

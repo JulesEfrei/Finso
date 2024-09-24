@@ -42,7 +42,7 @@ watch(() => transactions, (curr, prev) => generateChartData())
         <template #content>
             <div class="flex justify-center">
                 <i v-if="isLoading" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
-                <Chart v-else type="doughnut" :data="chartData" class="h-[350px]" />
+                <Chart v-else type="doughnut" :data="chartData" class="w-full md:w-[25rem]" />
             </div>
         </template>
     </Card>

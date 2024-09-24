@@ -36,11 +36,13 @@ async function getTransactions(filtersOptions = {}) {
     isLoading.value = true;
     try {
         const filters = Object.keys(filtersOptions).reduce((prev, curr, index) => [...prev, curr + "=" + filtersOptions[curr]], []).join("&");
+        console.log(filtersOptions);
 
         const res = await fetchWrapper.get(`${import.meta.env.VITE_BASE_URL}/users/${useAuthStore().user.id}/transactions?${filters}`)
 
         if (res) {
             transactions.value = res.data.transactions || [];
+            console.log(res.data);
             maxTransactions.value = res.data.maxTransactions;
             isLoading.value = false;
         }
@@ -53,12 +55,13 @@ async function getTransactions(filtersOptions = {}) {
 //init categories & first transactions
 onMounted(async () => {
     await getCategories();
-    await getTransactions(currentFilters);
+    await getTransactions(currentFilters.value);
     isLoading.value = false;
 })
 
 const handleFilter = async (filters) => {
     const newFilters = Object.fromEntries(Object.entries(filters).filter(([key, v]) => v));
+    const c = currentFilters.value;
 
     if (filters.startDate) {
         newFilters.startDate = formatDateToDMY(filters.startDate)
@@ -81,12 +84,13 @@ const handleFilter = async (filters) => {
 
     if (filters.category === "All") {
         delete newFilters.category
+        delete c.category
     }
 
     newFilters.offset = 0;
 
-    currentFilters.value = newFilters;
-    await getTransactions(newFilters);
+    currentFilters.value = { ...c, ...newFilters };
+    await getTransactions({ ...c, ...newFilters });
 };
 
 const checkAmountFilter = (filterText) => {
@@ -112,7 +116,7 @@ const evalAmountExpression = (expression, amount) => {
 };
 
 const changePage = async (e) => {
-    await getTransactions({ ...currentFilters.value, offset: (e.page + 1) * currentFilters.value.limit })
+    await getTransactions({ ...currentFilters.value, offset: e.page * currentFilters.value.limit })
 }
 
 const updateTransactions = async () => {

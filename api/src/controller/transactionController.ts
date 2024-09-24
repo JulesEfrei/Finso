@@ -22,7 +22,7 @@ export async function getUserTransactions(
       c.req.query()
     );
 
-    const maxTransactions = await getMaxTransactions(userId);
+    const maxTransactions = await getMaxTransactions(userId, c.req.query());
 
     return c.json(
       wrapReturnObject(200, null, {

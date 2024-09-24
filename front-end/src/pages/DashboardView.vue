@@ -88,7 +88,8 @@ const toast = useToast();
             <ComingSoonCard />
 
             <!-- Expenses by Category Chart -->
-            <ExpensesByCategoryChart :transactions="transactions.monthlyTransactions"
+            <ExpensesByCategoryChart
+                :transactions="transactions.monthlyTransactions.filter(elm => elm.type === 'outcome')"
                 :isLoading="isLoading.monthlyTransactions" />
 
             <!-- Monthly Stats Chart -->

@@ -12,6 +12,9 @@ services:
       - "8080:80"
     networks:
       - app_network
+    depends_on:
+      - db
+      - api
 
   # Backend API service
   api:
@@ -29,7 +32,9 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+        restart: true
     networks:
       - app_network
     env_file:
@@ -49,6 +54,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
 volumes:
   postgres_data:

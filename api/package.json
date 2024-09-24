@@ -14,7 +14,7 @@
     "migrate": "bun run src/utils/migrate.ts",
     "test": "vitest",
     "build": "bun build index.ts --outdir ./dist --target bun",
-    "setup": "bun run migrate && bun run src/utils/dataFixture.ts"
+    "setup": "./setup.sh"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

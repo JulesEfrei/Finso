@@ -98,7 +98,7 @@ To get a local copy up and running follow these simple example steps.
 2. Setup environment variables (You can simply duplicate `.env.dist` file to `.env`)
 
    ```.env
-   DB_HOST=db (Should be db if you're using docker, or localhost if running it withtout docker)
+   DB_HOST=db
    DB_NAME=my_db
    DB_USER=root
    DB_PASSWORD=password
@@ -120,7 +120,7 @@ To get a local copy up and running follow these simple example steps.
 4. Make database migration & import data fixtures
 
 ```bash
-docker compose exec api bun run setup
+docker compose exec api bun run setup <dev | prod>
 ```
 
 5. Enjoy the application

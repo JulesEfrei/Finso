@@ -34,7 +34,7 @@ watch(() => transactions, (curr, prev) => generateChartData())
 </script>
 
 <template>
-    <Card class="md:col-span-5 md:row-span-3">
+    <Card class="md:col-span-5 md:row-span-4">
         <template #title>
             Expenses by Category <small class="text-gray-400 text-sm">this
                 month</small>
@@ -42,7 +42,7 @@ watch(() => transactions, (curr, prev) => generateChartData())
         <template #content>
             <div class="flex justify-center">
                 <i v-if="isLoading" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
-                <Chart v-else type="doughnut" :data="chartData" class="h-[260px]" />
+                <Chart v-else type="doughnut" :data="chartData" class="h-[350px]" />
             </div>
         </template>
     </Card>
